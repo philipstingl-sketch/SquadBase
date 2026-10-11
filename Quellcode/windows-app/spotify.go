@@ -56,15 +56,26 @@ type spotifySettings struct {
 var spotifyIDPattern = regexp.MustCompile(`^[a-fA-F0-9]{32}$`)
 var spotifyPlaylistPattern = regexp.MustCompile(`^[A-Za-z0-9]{22}$`)
 
+// This is the public OAuth application ID. OAuth still uses PKCE and never
+// embeds a client secret; each friend signs in to their own Spotify account.
+const spotifyAppClientID = "7a5bbcd60f674adf80d55139dd0fc992"
+
 func newSpotify(folder string) *SpotifyEngine {
 	s := &SpotifyEngine{folder: folder, client: &http.Client{Timeout: 14 * time.Second}, bookmarks: []SpotifyBookmark{}}
 	var cfg spotifySettings
 	loadJSON(filepath.Join(folder, "spotify_settings.json"), &cfg)
-	s.clientID = cfg.ClientID
+	s.clientID = spotifyAppClientID
 	if cfg.Bookmarks != nil {
 		s.bookmarks = cfg.Bookmarks
 	}
-	loadJSON(filepath.Join(folder, "spotify_session.json"), &s.token)
+	if cfg.ClientID == spotifyAppClientID {
+		loadJSON(filepath.Join(folder, "spotify_session.json"), &s.token)
+	} else {
+		// Tokens are bound to the client ID that issued them. Keep bookmarks,
+		// but make users sign in once with the built-in shared application.
+		_ = os.Remove(filepath.Join(folder, "spotify_session.json"))
+		_ = s.saveSettings()
+	}
 	return s
 }
 func (s *SpotifyEngine) saveSettings() error {
@@ -88,7 +99,7 @@ func (s *SpotifyEngine) authURL() (string, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if !spotifyIDPattern.MatchString(s.clientID) {
-		return "", errors.New("Trage zuerst deine Spotify Client-ID ein (32 Zeichen).")
+		return "", errors.New("Die eingebaute Spotify-App-Kennung ist ungültig.")
 	}
 	if s.redirectURI == "" {
 		if s.callbackError != "" {
@@ -367,37 +378,6 @@ func (s *SpotifyEngine) handleAPI(w http.ResponseWriter, r *http.Request, name s
 	case "spotify/status":
 		if r.Method == "GET" {
 			send(w, 200, s.status())
-			return
-		}
-	case "spotify/client":
-		if r.Method == "POST" {
-			var q struct {
-				ClientID string `json:"clientId"`
-			}
-			if json.NewDecoder(r.Body).Decode(&q) != nil {
-				failure(w, 400, "Ungültige Eingabe")
-				return
-			}
-			q.ClientID = strings.TrimSpace(q.ClientID)
-			if q.ClientID != "" && !spotifyIDPattern.MatchString(q.ClientID) {
-				failure(w, 422, "Client-ID muss 32 hexadezimale Zeichen enthalten")
-				return
-			}
-			s.mu.Lock()
-			changed := s.clientID != q.ClientID
-			if changed {
-				s.token = SpotifyToken{}
-			}
-			s.clientID = q.ClientID
-			s.mu.Unlock()
-			if changed {
-				_ = os.Remove(filepath.Join(s.folder, "spotify_session.json"))
-			}
-			if e := s.saveSettings(); e != nil {
-				failure(w, 500, "Client-ID konnte nicht gespeichert werden")
-				return
-			}
-			send(w, 200, map[string]string{"message": "Spotify Client-ID gespeichert"})
 			return
 		}
 	case "spotify/start":

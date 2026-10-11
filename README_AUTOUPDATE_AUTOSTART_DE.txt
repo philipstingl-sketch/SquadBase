@@ -1,4 +1,4 @@
-SQUAD BASE v4.7.0 – AUTO-UPDATE UND AUTOSTART
+SQUAD BASE v4.7.2 – AUTO-UPDATE UND AUTOSTART
 =====================================================
 
 INTEGRATION
@@ -14,7 +14,7 @@ APP-UPDATES EINRICHTEN
 2. Prüfe den Quellcode vor dem Upload. Repository und Release-Dateien sind dann
    öffentlich sichtbar. Lade keine Zugangsdaten, privaten Chatdaten oder lokalen
    Backups hoch.
-3. Erstelle für zukünftige Builds einen Patch-Tag im Format v4.7.1, v4.7.2 usw.
+3. Erstelle für zukünftige Builds einen Patch-Tag im Format v4.7.3, v4.7.4 usw.
    GitHub Actions baut SquadBase_vX.Y.Z_Friends_Tools.exe und SHA256SUMS.txt und
    hängt beides an das Release. GitHub Actions muss aktiviert sein.
 4. Installiere die erste updaterfähige Version manuell. Öffne in SquadBase
@@ -30,6 +30,18 @@ unter einem geschützten Ordner wie „Programme“ kann das Update fehlschlagen
 Nutze dann die Release-Seite oder installiere SquadBase in einem Ordner, in dem
 dein Windows-Benutzer Änderungen vornehmen darf.
 
+SPOTIFY FÜR FREUNDE
+-------------------
+Die Spotify-App-Kennung ist in SquadBase hinterlegt. Freunde müssen keine eigene
+Client-ID erstellen: Sie klicken auf „Mit Spotify anmelden“ und stimmen dem
+Zugriff auf ihr eigenes Konto zu. OAuth PKCE wird ohne Client-Secret verwendet;
+persönliche Tokens bleiben lokal auf dem jeweiligen PC.
+
+Der App-Inhaber muss einmalig im Spotify Developer Dashboard die Redirect-URI
+http://127.0.0.1:8888/spotify/callback exakt eintragen und die Spotify-Konten der
+Freunde freigeben. Im Developer-Modus sind höchstens fünf Nutzer zulässig; der
+App-Inhaber benötigt Spotify Premium. Die Benutzerfreigabe wird nicht durch
+SquadBase automatisiert.
 WINDOWS-AUTOSTART
 -----------------
 Der Windows-Autostart ist in v4.7 bereits unter „Windows & Komfort“ integriert.

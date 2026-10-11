@@ -16,7 +16,7 @@ function spotifyPlayer(now){spotifyNow=now;window.dispatchEvent(new CustomEvent(
  $('spotify-mini').dataset.dock=document.getElementById('v41-spotify-dock-select')?.value||'bar';
 }
 function spotifyStateUI(st){spotifyConnected=!!st.connected;spotifyDesktopControls=!!st.desktopControls;spotifyReady=true;
- const setup=$('spotify-help-status');if(setup)setup.textContent=!st.hasClientId?'Ohne Client-ID ist oben die Windows-Musiksteuerung nutzbar. Für Songtitel und Playlists benötigst du eine Spotify Developer Client-ID, Premium und eine freigegebene App.': st.callbackError || 'Client-ID ist gespeichert. Für den Login muss http://127.0.0.1:8888/spotify/callback exakt im Developer Dashboard stehen.';
+ const setup=$('spotify-help-status');if(setup)setup.textContent=st.callbackError || 'Spotify ist vorbereitet. Klicke auf „Mit Spotify anmelden“ und erlaube den Zugriff auf dein eigenes Konto.';
  for(const id of ['spotify-desktop-prev','spotify-desktop-toggle','spotify-desktop-next']){const b=$(id);if(b)b.disabled=!spotifyDesktopControls;}
 $('spotify-connected').hidden=!spotifyConnected;$('spotify-disconnected').hidden=spotifyConnected;$('spotify-connection-label').textContent=spotifyConnected?'Mit Spotify verbunden':'Noch nicht mit Spotify verbunden';$('spotify-mini').hidden=(!spotifyConnected&&!spotifyDesktopControls)||(document.getElementById('v41-spotify-dock-select')?.value==='hidden');if(!spotifyConnected){spotifyPlayer(null);$('spotify-playlists-status').textContent='Automatische Playlists brauchen eine Spotify-Anmeldung. Gespeicherte Spotify-Links kannst du trotzdem öffnen.'}spotifyRenderBookmarks(st.bookmarks||[])}
 async function spotifyLoadState(){try{spotifyStateUI(await spotifyAPI('status'));if(spotifyConnected)await spotifyRefreshNow();return true}catch(e){notify('Spotify-Status: '+e.message,true);return false}}
@@ -41,7 +41,6 @@ async function spotifyOpenTab(){if(!spotifyReady)await spotifyLoadState();if(spo
 for(const [id,action] of [['spotify-desktop-open','open'],['spotify-desktop-toggle','toggle'],['spotify-desktop-prev','previous'],['spotify-desktop-next','next']]){
  $(id).addEventListener('click',()=>spotifyDesktop(action));
 }
-$('spotify-save-client').addEventListener('click',async()=>{try{await spotifyAPI('client',{clientId:$('spotify-client-id').value.trim()});notify('Client-ID gespeichert. Du kannst Spotify jetzt verbinden.');await spotifyLoadState()}catch(e){notify(e.message,true)}});
 $('spotify-login').addEventListener('click',async()=>{try{await spotifyAPI('start',{});notify('Spotify-Anmeldung wurde im Browser geöffnet.')}catch(e){notify(e.message,true)}});
 $('spotify-logout').addEventListener('click',async()=>{try{await spotifyAPI('logout',{});spotifyLastPlaylists=0;$('spotify-playlists').replaceChildren();$('spotify-library-browser').hidden=true;await spotifyLoadState();notify('Spotify-Verbindung beendet.')}catch(e){notify(e.message,true)}});
 $('spotify-open').addEventListener('click',()=>spotifyOpenPlaylist(''));
