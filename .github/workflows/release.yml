@@ -32,27 +32,30 @@ jobs:
           if ([version]$target -le [version]$manifest) { throw "Release $target ist nicht neuer als $manifest." }
           $source = [regex]::Replace($source, 'const squadVersion = "[^"]+"', ('const squadVersion = "' + $target + '"'), 1)
           Set-Content -Path 'Quellcode/windows-app/maintenance.go' -Value $source -NoNewline -Encoding utf8
-      - name: Build Windows x64 EXE and checksum
+          $html = Get-Content -Raw 'Quellcode/windows-app/web/index.html'
+          $footerVersion = [regex]::Match($html, '<span class="version">v4\.7\.\d+</span>')
+          if (-not $footerVersion.Success) { throw 'Versionsanzeige im App-Footer nicht gefunden.' }
+          $html = [regex]::Replace($html, '<span class="version">v4\.7\.\d+</span>', ('<span class="version">v' + $target + '</span>'), 1)
+          Set-Content -Path 'Quellcode/windows-app/web/index.html' -Value $html -NoNewline -Encoding utf8
+          $installer = Get-Content -Raw 'Quellcode/installer/main.go'
+          $installerMatch = [regex]::Match($installer, 'const installerVersion = "([^"]+)"')
+          if (-not $installerMatch.Success) { throw 'installerVersion in installer/main.go nicht gefunden.' }
+          $installer = [regex]::Replace($installer, 'const installerVersion = "[^"]+"', ('const installerVersion = "' + $target + '"'), 1)
+          Set-Content -Path 'Quellcode/installer/main.go' -Value $installer -NoNewline -Encoding utf8
+      - name: Build Windows x64 app, installer and checksums
         shell: pwsh
         run: |
           $version = $env:GITHUB_REF_NAME.Substring(1)
-          $dist = 'Quellcode/windows-app/dist'
+          $dist = 'Quellcode/dist'
           New-Item -ItemType Directory -Force -Path $dist | Out-Null
-          $name = "SquadBase_v${version}_Friends_Tools.exe"
-          Push-Location Quellcode/windows-app
-          try {
-            $env:GOOS = 'windows'; $env:GOARCH = 'amd64'; $env:CGO_ENABLED = '0'
-            go build -trimpath -ldflags='-s -w -H=windowsgui' -o "dist/$name" .
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          } finally { Pop-Location }
-          $file = Join-Path $dist $name
-          $hash = (Get-FileHash -Algorithm SHA256 $file).Hash.ToLowerInvariant()
-          "$hash *$name" | Set-Content -Path (Join-Path $dist 'SHA256SUMS.txt') -Encoding ascii
+          ./Quellcode/BUILD_ALL_WINDOWS.ps1 -Version $version -SkipTests
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: SquadBase ${{ github.ref_name }}
           generate_release_notes: true
           files: |
-            Quellcode/windows-app/dist/SquadBase_v*_*_Tools.exe
-            Quellcode/windows-app/dist/SHA256SUMS.txt
+            Quellcode/dist/SquadBase_v*_Friends_Tools.exe
+            Quellcode/dist/SquadBase_v*_Installer.exe
+            Quellcode/dist/SHA256SUMS.txt

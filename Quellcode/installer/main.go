@@ -13,13 +13,16 @@ import (
 	"unsafe"
 )
 
+// The release workflow replaces this value with the tagged release version.
+const installerVersion = "4.7.0"
+
 //go:embed payload/SquadBase.exe payload/SquadBaseUninstall.exe
 var payload embed.FS
 var msgProc = syscall.NewLazyDLL("user32.dll").NewProc("MessageBoxW")
 
 func show(text string, flags uintptr) uintptr {
 	p, _ := syscall.UTF16PtrFromString(text)
-	title, _ := syscall.UTF16PtrFromString("SQUAD BASE 4.7.0 · Installer")
+	title, _ := syscall.UTF16PtrFromString("SQUAD BASE " + installerVersion + " · Installer")
 	r, _, _ := msgProc.Call(0, uintptr(unsafe.Pointer(p)), uintptr(unsafe.Pointer(title)), flags)
 	return r
 }
@@ -54,7 +57,7 @@ func saveReplace(dir, file string, data []byte) error {
 }
 func psQuoted(p string) string { return "'" + strings.ReplaceAll(p, "'", "''") + "'" }
 func makeShortcut(target, lnk string) error {
-	script := "$shell=New-Object -ComObject WScript.Shell; $shortcut=$shell.CreateShortcut(" + psQuoted(lnk) + "); $shortcut.TargetPath=" + psQuoted(target) + "; $shortcut.WorkingDirectory=" + psQuoted(filepath.Dir(target)) + "; $shortcut.Description='SQUAD BASE 4.7.0'; $shortcut.Save()"
+	script := "$shell=New-Object -ComObject WScript.Shell; $shortcut=$shell.CreateShortcut(" + psQuoted(lnk) + "); $shortcut.TargetPath=" + psQuoted(target) + "; $shortcut.WorkingDirectory=" + psQuoted(filepath.Dir(target)) + "; $shortcut.Description='SQUAD BASE " + installerVersion + "'; $shortcut.Save()"
 	cmd := exec.Command("powershell.exe", "-NoProfile", "-NonInteractive", "-Command", script)
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	if out, e := cmd.CombinedOutput(); e != nil {
@@ -99,7 +102,7 @@ func install() error {
 	shortcutError := makeShortcut(filepath.Join(dir, "SquadBase.exe"), filepath.Join(start, "SQUAD BASE.lnk"))
 	// Register a per-user uninstall entry in Windows Settings (no admin rights).
 	_ = registry("DisplayName", "REG_SZ", "SQUAD BASE")
-	_ = registry("DisplayVersion", "REG_SZ", "4.7.0")
+	_ = registry("DisplayVersion", "REG_SZ", installerVersion)
 	_ = registry("Publisher", "REG_SZ", "SQUAD BASE Community")
 	_ = registry("InstallLocation", "REG_SZ", dir)
 	_ = registry("UninstallString", "REG_SZ", filepath.Join(dir, "SquadBaseUninstall.exe"))
@@ -111,12 +114,12 @@ func install() error {
 	return nil
 }
 func main() {
-	if show("SQUAD BASE 4.7.0 für diesen Windows-Benutzer installieren?\n\nInstallationsort: %LOCALAPPDATA%\\Programs\\SquadBase\n\nVorhandene persönliche Einstellungen und Spielstände werden nicht gelöscht.\n\nDie App ist nicht digital signiert.", 0x24) != 6 {
+	if show("SQUAD BASE "+installerVersion+" für diesen Windows-Benutzer installieren?\n\nInstallationsort: %LOCALAPPDATA%\\Programs\\SquadBase\n\nVorhandene persönliche Einstellungen und Spielstände werden nicht gelöscht.\n\nDie App ist nicht digital signiert.", 0x24) != 6 {
 		return
 	}
 	if e := install(); e != nil {
 		show("Installation nicht vollständig: "+e.Error()+"\n\nDie portable EXE im Downloadpaket kann alternativ verwendet werden.", 0x10)
 		return
 	}
-	show("SQUAD BASE 4.7.0 wurde installiert!\n\nÖffne SQUAD BASE über das Startmenü.\n\nDeine bisherigen Einstellungen bleiben erhalten.", 0x40)
+	show("SQUAD BASE "+installerVersion+" wurde installiert!\n\nÖffne SQUAD BASE über das Startmenü.\n\nDeine bisherigen Einstellungen bleiben erhalten.", 0x40)
 }

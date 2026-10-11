@@ -1,4 +1,4 @@
-SQUAD BASE v4.7.2 – AUTO-UPDATE UND AUTOSTART
+SQUAD BASE v4.7.3 – AUTO-UPDATE UND AUTOSTART
 =====================================================
 
 INTEGRATION
@@ -14,8 +14,8 @@ APP-UPDATES EINRICHTEN
 2. Prüfe den Quellcode vor dem Upload. Repository und Release-Dateien sind dann
    öffentlich sichtbar. Lade keine Zugangsdaten, privaten Chatdaten oder lokalen
    Backups hoch.
-3. Erstelle für zukünftige Builds einen Patch-Tag im Format v4.7.3, v4.7.4 usw.
-   GitHub Actions baut SquadBase_vX.Y.Z_Friends_Tools.exe und SHA256SUMS.txt und
+3. Erstelle für zukünftige Builds einen Patch-Tag im Format v4.7.4, v4.7.5 usw.
+   GitHub Actions baut SquadBase_vX.Y.Z_Friends_Tools.exe, den Installer und SHA256SUMS.txt und
    hängt beides an das Release. GitHub Actions muss aktiviert sein.
 4. Installiere die erste updaterfähige Version manuell. Öffne in SquadBase
    „Updates & Diagnose“, trage dein Repository als owner/repository ein und
