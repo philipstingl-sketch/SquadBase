@@ -340,6 +340,17 @@ func (a *App) handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	name := strings.TrimPrefix(r.URL.Path, a.prefix)
+	if r.Method == "GET" && name == "favicon.png" {
+		b, err := assets.ReadFile("web/favicon.png")
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Content-Type", "image/png")
+		w.Header().Set("Cache-Control", "no-store")
+		_, _ = w.Write(b)
+		return
+	}
 	if r.Method == "GET" && (name == "" || name == "index.html" || name == "style.css" || name == "cozy-v35.css" || name == "cozy-v36.css" || name == "app.js" || name == "friends.js" || name == "spotify.js" || name == "spotify-library.js" || name == "updates.js" || name == "minigames.js" || name == "assistant.js" || name == "ai-images.js" || name == "soundtrack.js" || name == "hardware-chart.js" || name == "themes.js" || name == "clock.js" || name == "squad_cozy_orbit.ogg" || name == "squad_neon_sprint.ogg" || name == "overlay.html" || name == "overlay.css" || name == "overlay.js" || name == "hardware-pro.js" || name == "overlay-settings.js" || name == "v4.css" || name == "v4.js" || name == "v41.js" || name == "v41.css" || name == "v42.css" || name == "v42.js" || name == "v423.css" || name == "v43.css" || name == "v43.js" || name == "overlay-drag.js" || name == "v44.css" || name == "v44.js" || name == "v45.css" || name == "v45.js" || name == "v453.css" || name == "v454.css" || name == "v454.js" || name == "friend-alerts.js" || name == "calls.js" || name == "v455.css" || name == "comfort.css" || name == "comfort.js") {
 		if name == "" {
 			name = "index.html"

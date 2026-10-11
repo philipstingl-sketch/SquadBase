@@ -16,7 +16,7 @@ import (
 // The release workflow replaces this value with the tagged release version.
 const installerVersion = "4.7.0"
 
-//go:embed payload/SquadBase.exe payload/SquadBaseUninstall.exe
+//go:embed payload/SquadBase.exe payload/SquadBaseUninstall.exe app-icon.ico
 var payload embed.FS
 var msgProc = syscall.NewLazyDLL("user32.dll").NewProc("MessageBoxW")
 
@@ -56,8 +56,8 @@ func saveReplace(dir, file string, data []byte) error {
 	return nil
 }
 func psQuoted(p string) string { return "'" + strings.ReplaceAll(p, "'", "''") + "'" }
-func makeShortcut(target, lnk string) error {
-	script := "$shell=New-Object -ComObject WScript.Shell; $shortcut=$shell.CreateShortcut(" + psQuoted(lnk) + "); $shortcut.TargetPath=" + psQuoted(target) + "; $shortcut.WorkingDirectory=" + psQuoted(filepath.Dir(target)) + "; $shortcut.Description='SQUAD BASE " + installerVersion + "'; $shortcut.Save()"
+func makeShortcut(target, icon, lnk string) error {
+	script := "$shell=New-Object -ComObject WScript.Shell; $shortcut=$shell.CreateShortcut(" + psQuoted(lnk) + "); $shortcut.TargetPath=" + psQuoted(target) + "; $shortcut.WorkingDirectory=" + psQuoted(filepath.Dir(target)) + "; $shortcut.IconLocation=" + psQuoted(icon+",0") + "; $shortcut.Description='SQUAD BASE " + installerVersion + "'; $shortcut.Save()"
 	cmd := exec.Command("powershell.exe", "-NoProfile", "-NonInteractive", "-Command", script)
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	if out, e := cmd.CombinedOutput(); e != nil {
@@ -91,6 +91,13 @@ func install() error {
 	if e = saveReplace(dir, "SquadBaseUninstall.exe", uninstall); e != nil {
 		return e
 	}
+	icon, e := payload.ReadFile("app-icon.ico")
+	if e != nil {
+		return fmt.Errorf("App-Symbol konnte nicht geladen werden: %w", e)
+	}
+	if e = saveReplace(dir, "SquadBase.ico", icon); e != nil {
+		return fmt.Errorf("App-Symbol konnte nicht installiert werden: %w", e)
+	}
 	appData := os.Getenv("APPDATA")
 	if appData == "" {
 		return fmt.Errorf("APPDATA fehlt; Startmenü ist nicht erreichbar")
@@ -99,7 +106,7 @@ func install() error {
 	if e = os.MkdirAll(start, 0700); e != nil {
 		return e
 	}
-	shortcutError := makeShortcut(filepath.Join(dir, "SquadBase.exe"), filepath.Join(start, "SQUAD BASE.lnk"))
+	shortcutError := makeShortcut(filepath.Join(dir, "SquadBase.exe"), filepath.Join(dir, "SquadBase.ico"), filepath.Join(start, "SQUAD BASE.lnk"))
 	// Register a per-user uninstall entry in Windows Settings (no admin rights).
 	_ = registry("DisplayName", "REG_SZ", "SQUAD BASE")
 	_ = registry("DisplayVersion", "REG_SZ", installerVersion)
