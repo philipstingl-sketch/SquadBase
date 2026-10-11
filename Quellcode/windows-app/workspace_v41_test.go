@@ -37,6 +37,24 @@ func TestWorkspacePersistence(t *testing.T) {
 		t.Fatal(w.Code)
 	}
 }
+
+func TestNewWorkspaceStartsWithMinimalDashboard(t *testing.T) {
+	x := defaultWorkspace()
+	if x.Preset != "minimal" {
+		t.Fatalf("default preset = %q, want minimal", x.Preset)
+	}
+	for _, id := range []string{"system", "clockwidget", "games"} {
+		for _, hidden := range x.Hidden {
+			if hidden == id {
+				t.Fatalf("core dashboard card %q should be visible by default", id)
+			}
+		}
+	}
+	if !validWorkspace(x) {
+		t.Fatal("minimal default workspace must pass validation")
+	}
+}
+
 func TestWorkspaceRejectsUnexpectedCardsAndModes(t *testing.T) {
 	a := &App{folder: t.TempDir(), workspace: defaultWorkspace()}
 	for _, which := range []string{"evil", "duplicate", "allhidden", "voice", "dock"} {

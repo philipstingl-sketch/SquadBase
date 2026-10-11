@@ -30,7 +30,7 @@ var legacyDashboardCards = []string{"system", "monitor", "games", "network", "ne
 var optionalDashboardCards = []string{"clockwidget", "musicwidget", "friendswidget", "sessionwidget"}
 
 func defaultWorkspace() WorkspacePrefs {
-	return WorkspacePrefs{Preset: "gaming", Order: append([]string(nil), dashboardCards...), Hidden: append([]string(nil), optionalDashboardCards...), Wide: []string{"news"}, VoiceRate: 1, SpotifyDock: "bar", Version: 2, CozyStart: true, SmartGaming: true, GlassStyle: "frosted"}
+	return WorkspacePrefs{Preset: "minimal", Order: []string{"system", "clockwidget", "games", "network", "monitor", "news", "musicwidget", "friendswidget", "sessionwidget"}, Hidden: []string{"network", "monitor", "news", "musicwidget", "friendswidget", "sessionwidget"}, Wide: []string{"system"}, VoiceRate: 1, SpotifyDock: "bar", Version: 2, CozyStart: true, SmartGaming: true, GlassStyle: "frosted"}
 }
 
 // The previous version stored five cards. Append widgets without altering personal

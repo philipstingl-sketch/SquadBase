@@ -15,6 +15,7 @@
 .v43-game-cover{display:block;width:150px;max-width:100%;aspect-ratio:460/215;object-fit:cover;border-radius:10px;margin-bottom:7px;opacity:.92}
 .v43-library-stats{margin-top:5px;color:#b8d7c7!important}
 .v43-assistant-tools{margin-bottom:15px}.v43-assistant-shortcuts{margin-top:10px}
+.v41-nav-group.has-active>summary{color:var(--green);background:rgba(var(--theme-rgb),.075)}
 .v43-ai-summary{padding:12px 14px;margin-top:13px;background:#ffffff0b;border:1px solid #ffffff20;border-radius:12px;line-height:1.6;font-size:13px;overflow-wrap:anywhere}
 .v43-theme-pro{margin-block:15px}
 .v43-theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;align-items:center;margin:16px 0}
@@ -30,8 +31,10 @@ html,body{max-width:100%}input,select,textarea{min-width:0}
    not wrap long group names into vertical unreadable words. */
 @media (min-width:751px) and (max-width:1150px){
  .v41-nav-group summary{font-size:0!important;display:flex!important;align-items:center;justify-content:center!important;padding:12px 2px!important;line-height:1!important;white-space:nowrap!important;min-height:43px}
- .v41-nav-group summary::before{content:"🎮";font-size:20px;line-height:1}
- .v41-nav-group[data-v43-group="tools"] summary::before{content:"⚙";font-size:22px}
+ .v41-nav-group[data-v43-group="games"] summary::before{content:"🎮";font-size:20px;line-height:1}
+ .v41-nav-group[data-v43-group="media"] summary::before{content:"♫";font-size:22px;line-height:1}
+ .v41-nav-group[data-v43-group="tools"] summary::before{content:"🧰";font-size:20px;line-height:1}
+ .v41-nav-group[data-v43-group="system"] summary::before{content:"⚙";font-size:22px;line-height:1}
  .v41-nav-group summary::after{display:none!important}
  .topbar .clock-cluster{display:none!important}
 }

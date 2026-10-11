@@ -11,7 +11,7 @@
   minimal:{order:['system','clockwidget','games','network','monitor','news','musicwidget','friendswidget','sessionwidget'],hidden:['network','monitor','news','musicwidget','friendswidget','sessionwidget'],wide:['system']},
   social:{order:['friendswidget','musicwidget','games','news','network','system','monitor','clockwidget','sessionwidget'],hidden:['monitor','clockwidget','sessionwidget'],wide:['news']}
  };
- let prefs={preset:'gaming',...presets.gaming,readAloud:false,voiceRate:1,voiceName:'',spotifyDock:'bar',version:2,cozyStart:true,smartGaming:true,glassStyle:'frosted'};
+ let prefs={preset:'minimal',...presets.minimal,readAloud:false,voiceRate:1,voiceName:'',spotifyDock:'bar',version:2,cozyStart:true,smartGaming:true,glassStyle:'frosted'};
  let editing=false, board, selectedDrag=null, saveQueue=Promise.resolve(), beforeEdit=null;
  const notifyMsg=(message,bad=false)=>{ if(typeof notify==='function')notify(message,bad) };
  async function savePrefs(){
@@ -25,22 +25,36 @@
  const cardFor=id=>board?.querySelector(`[data-dashboard-card="${id}"]`);
  function makeSidebarGroups(){
   const nav=el('nav');if(!nav)return;
-  const groups=[{label:'🎮 Spiele & News',ids:['games','library','updates']},{label:'🧰 Tools',ids:['assistant','soundboard','stats','discord','maintenance','remote']}];
+  const groups=[
+   {key:'games',label:'🎮 Spiele',ids:['games','library','minigames','updates']},
+   {key:'media',label:'♫ Medien',ids:['spotify','soundboard']},
+   {key:'tools',label:'🧰 Extras',ids:['assistant','network','stats','discord','remote']},
+   {key:'system',label:'⚙ System',ids:['maintenance','settings']}
+  ];
+  const dashboard=nav.querySelector('button.tab[data-tab="dashboard"]');
+  const friends=nav.querySelector('button.tab[data-tab="friends"]');
+  const groupedIds=groups.flatMap(group=>group.ids);
+  const groupedButtons=groupedIds.map(id=>nav.querySelector(`button.tab[data-tab="${id}"]`));
+  if(!dashboard||!friends||groupedButtons.some(button=>!button))return;
+  const groupNodes=[];
   for(const grp of groups){
-   const details=document.createElement('details');details.className='v41-nav-group';details.dataset.v43Group=grp.ids[0]==='games'?'games':'tools';
-   const summary=document.createElement('summary');summary.textContent=grp.label;summary.title=grp.label;details.append(summary);
+   const details=document.createElement('details');details.className='v41-nav-group';details.dataset.v43Group=grp.key;
+   const summary=document.createElement('summary');summary.textContent=grp.label;summary.title=grp.label;summary.setAttribute('aria-label',grp.label+' öffnen');details.append(summary);
    const box=document.createElement('div');box.className='v41-nav-links';details.append(box);
    for(const name of grp.ids){const b=nav.querySelector(`button.tab[data-tab="${name}"]`);if(b)box.append(b)}
-   const anchor=grp.ids[0]==='games'?nav.querySelector('[data-tab="dashboard"]'):nav.querySelector('[data-tab="minigames"]');
-   anchor?.after(details);
+   groupNodes.push(details);
    details.addEventListener('toggle',()=>{if(details.open)document.querySelectorAll('.v41-nav-group').forEach(d=>{if(d!==details)d.open=false})});
-   box.addEventListener('click',e=>{if(window.innerWidth<=750&&e.target.closest('button[data-tab]'))details.open=false});
   }
-  // Dashboard, Freunde, Minispiele and Spotify remain direct tabs. KI and Soundboard live under Tools.
+  nav.replaceChildren(dashboard,groupNodes[0],friends,...groupNodes.slice(1));
+  const markActiveGroup=()=>groupNodes.forEach(group=>group.classList.toggle('has-active',!!group.querySelector('.tab.active')));
+  markActiveGroup();
+  // Keep the frequent destinations visible and reveal the rest only when its group is opened.
   document.addEventListener('click',e=>{
    const b=e.target.closest('button[data-tab],button[data-goto]');if(!b)return;
    const target=b.dataset.tab||b.dataset.goto;
-   for(const d of nav.querySelectorAll('.v41-nav-group'))if(d.querySelector(`[data-tab="${target}"]`))d.open=true;
+   const group=[...nav.querySelectorAll('.v41-nav-group')].find(d=>d.querySelector(`[data-tab="${target}"]`));
+   if(group)group.open=window.innerWidth>750;
+   markActiveGroup();
   });
  }
  function initCards(){

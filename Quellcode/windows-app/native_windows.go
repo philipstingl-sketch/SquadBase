@@ -14,6 +14,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"syscall"
 	"time"
 	"unsafe"
@@ -403,10 +404,10 @@ type notifyIconDataW struct {
 var trayWndCallback = syscall.NewCallback(trayWndProc)
 var enumWindowCallback = syscall.NewCallback(enumSquadBaseWindows)
 
-type windowSearch struct{ HWnd uintptr }
+var enumWindowSearchMu sync.Mutex
+var enumWindowFound atomic.Uintptr
 
-func enumSquadBaseWindows(hwnd uintptr, lParam uintptr) uintptr {
-	ctx := (*windowSearch)(unsafe.Pointer(lParam))
+func enumSquadBaseWindows(hwnd uintptr, _ uintptr) uintptr {
 	length, _, _ := pGetWindowTextLenW.Call(hwnd)
 	if length == 0 || length > 1024 {
 		return 1
@@ -415,16 +416,18 @@ func enumSquadBaseWindows(hwnd uintptr, lParam uintptr) uintptr {
 	pGetWindowTextW.Call(hwnd, uintptr(unsafe.Pointer(&buf[0])), uintptr(len(buf)))
 	title := strings.ToLower(syscall.UTF16ToString(buf))
 	if strings.Contains(title, "squad base") {
-		ctx.HWnd = hwnd
+		enumWindowFound.Store(hwnd)
 		return 0
 	}
 	return 1
 }
 
 func findSquadBaseWindow() uintptr {
-	ctx := windowSearch{}
-	pEnumWindows.Call(enumWindowCallback, uintptr(unsafe.Pointer(&ctx)))
-	return ctx.HWnd
+	enumWindowSearchMu.Lock()
+	defer enumWindowSearchMu.Unlock()
+	enumWindowFound.Store(0)
+	pEnumWindows.Call(enumWindowCallback, 0)
+	return enumWindowFound.Load()
 }
 
 func hideAppWindow() error {
