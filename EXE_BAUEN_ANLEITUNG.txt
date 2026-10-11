@@ -1,0 +1,28 @@
+SQUAD BASE 4.7.0 – WINDOWS-BUILD
+================================
+
+Voraussetzungen
+- Windows 10/11 x64
+- Go (aktueller stabiler Stand) im PATH
+- PowerShell
+
+Build
+1. Das ZIP entpacken.
+2. PowerShell im Ordner „Quellcode“ öffnen.
+3. .\BUILD_ALL_WINDOWS.ps1 ausführen.
+4. Die Dateien liegen anschließend unter „Quellcode\dist“:
+   - SquadBase_v4.7.0_Friends_Tools.exe
+   - SquadBase_v4.7.0_Installer.exe
+   - SHA256SUMS.txt
+
+Der Build testet standardmäßig die Go-Pakete und erstellt erst App sowie Uninstaller, dann den Installer. Mit „-SkipTests“ lassen sich Go-Tests überspringen; empfohlen wird das nicht.
+
+Prüfungen im Entwicklungs-Build
+- go test ./...: bestanden
+- go vet ./...: bestanden
+- JavaScript-Syntaxprüfung (node --check): bestanden
+- Browser-Smoke-Test bei 1440 und 900 Pixeln: bestanden, keine JS-Fehler
+- Cloud-Server: 13/13 Tests bestanden
+- App und Installer als PE32+ Windows-x64-GUI-Anwendungen gebaut
+
+Hinweis: Der Cross-Build erfolgt auf Linux. Die EXE-Dateien wurden hier nicht auf einem echten interaktiven Windows-Desktop gestartet; Installer, Tray und Autostart müssen auf Windows praktisch getestet werden.

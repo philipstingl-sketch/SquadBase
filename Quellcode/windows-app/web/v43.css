@@ -1,0 +1,37 @@
+/* SQUAD BASE 4.3 – scoped, responsive additions. Original settings preserved. */
+.v43-music-center{margin-block:16px}
+.v43-music-actions,.v43-actions,.v43-assistant-buttons,.v43-assistant-shortcuts{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.v43-music-actions button[aria-pressed="true"]{border-color:var(--accent,#9de8c4);box-shadow:inset 0 0 0 1px #a2f2c33b;background:#a2f2c326}
+.v43-queue-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:20px 2px 12px}
+.v43-queue-title span{font-size:12px;color:var(--muted,#b8c9c1)}
+.v43-queue{max-height:300px;overflow:auto;padding:2px 5px;scrollbar-width:thin}
+.v43-queue-row{display:flex;align-items:center;gap:13px;padding:10px;border-radius:11px;border-bottom:1px solid #ffffff15;min-width:0}
+.v43-queue-row:nth-child(odd){background:#ffffff07}
+.v43-queue-index{color:#9bb8ad;min-width:24px;font-variant-numeric:tabular-nums;font-size:12px}
+.v43-queue-row div{min-width:0}.v43-queue-row strong,.v43-queue-row small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v43-queue-row strong{font-size:13px}.v43-queue-row small{font-size:11px;color:#acc9bd;margin-top:3px}
+.v43-error{color:#fbb6a2!important}
+.spotify-track-queue{padding:5px 8px!important;min-width:max-content;color:#b3ecc9;border:1px solid #97d9b94a;background:#91d9b51a;border-radius:7px;font-size:11px}
+.v43-game-cover{display:block;width:150px;max-width:100%;aspect-ratio:460/215;object-fit:cover;border-radius:10px;margin-bottom:7px;opacity:.92}
+.v43-library-stats{margin-top:5px;color:#b8d7c7!important}
+.v43-assistant-tools{margin-bottom:15px}.v43-assistant-shortcuts{margin-top:10px}
+.v43-ai-summary{padding:12px 14px;margin-top:13px;background:#ffffff0b;border:1px solid #ffffff20;border-radius:12px;line-height:1.6;font-size:13px;overflow-wrap:anywhere}
+.v43-theme-pro{margin-block:15px}
+.v43-theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;align-items:center;margin:16px 0}
+.v43-theme-grid>label:not(.v42-setting-option){display:flex;flex-direction:column;gap:7px;color:#d8eee4;font-size:13px}
+.v43-theme-grid select{max-width:100%;width:100%}
+body.v43-night .panel,body.v43-night .v4-library-card{box-shadow:0 14px 40px #030b1691}
+body.v43-reduced-motion *,body.v43-reduced-motion *::before,body.v43-reduced-motion *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+html,body{max-width:100%}input,select,textarea{min-width:0}
+@media(max-width:900px){.v43-music-actions button{flex:1 1 140px}.spotify-track-actions{flex-wrap:wrap}.v43-game-cover{max-width:130px}}
+@media(max-width:620px){.v43-theme-grid{grid-template-columns:1fr}.v43-assistant-buttons>button{flex:1 1 100%}.v43-queue{max-height:225px}}
+
+/* v4.3 display fix: the collapsed navigation at 751–1150 px should show icons,
+   not wrap long group names into vertical unreadable words. */
+@media (min-width:751px) and (max-width:1150px){
+ .v41-nav-group summary{font-size:0!important;display:flex!important;align-items:center;justify-content:center!important;padding:12px 2px!important;line-height:1!important;white-space:nowrap!important;min-height:43px}
+ .v41-nav-group summary::before{content:"🎮";font-size:20px;line-height:1}
+ .v41-nav-group[data-v43-group="tools"] summary::before{content:"⚙";font-size:22px}
+ .v41-nav-group summary::after{display:none!important}
+ .topbar .clock-cluster{display:none!important}
+}

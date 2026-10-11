@@ -1,0 +1,29 @@
+SQUAD BASE 4.7.0 – Clean Navigation
+==================================
+
+DATEIEN
+- SquadBase_v4.7.0_Friends_Tools.exe: portable Version ohne Installation.
+- SquadBase_v4.7.0_Installer.exe: installiert für den aktuellen Windows-Benutzer.
+- SHA256SUMS.txt: Prüfsummen zur Integritätskontrolle.
+
+NEUE NAVIGATION
+- KI-Assistent und Soundboard/Autoclicker liegen im aufklappbaren Menü „Tools“.
+- „Minispiele“ bleibt als eigener Hauptreiter direkt erreichbar.
+- Overlay-Einstellungen befinden sich in „Einstellungen“ und lassen sich bei Bedarf aufklappen.
+- Die vorhandenen Funktionen und gespeicherten Optionen bleiben erhalten.
+
+ERSTER START
+1. Starte die portable EXE oder den Installer.
+2. Der Installer verwendet %LOCALAPPDATA%\Programs\SquadBase und benötigt normalerweise keine Administratorrechte.
+3. Die EXE-Dateien sind nicht digital signiert; Windows kann deshalb SmartScreen anzeigen. Prüfe die Datei und ihre Prüfsumme und starte sie nur, wenn du sie bewusst heruntergeladen hast.
+4. Die Oberfläche wird in der Desktop-App eingebettet bereitgestellt; der lokale Dienst lauscht nur auf 127.0.0.1.
+
+BEDIENUNG
+- Klicke auf „Tools“, um KI, Soundboard und weitere Hilfsfunktionen zu öffnen.
+- Öffne „Minispiele“ direkt über den eigenen Reiter.
+- Unter „Einstellungen“ klappst du „Overlay-Einstellungen“ für Layout, Position und Messwerte auf.
+
+HINWEISE
+- Autoclicker nur dort verwenden, wo automatische Klicks erlaubt sind.
+- Das Overlay kann in exklusivem Vollbild oder Anti-Cheat-Spielen eingeschränkt sein.
+- Der Quellcode und die Anleitung zum eigenen Build liegen in „Quellcode“.

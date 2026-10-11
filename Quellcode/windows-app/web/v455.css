@@ -1,0 +1,17 @@
+/* SQUAD BASE 4.5.5 – Gruppenanrufe: Kacheln, Einladen-Zeile */
+.v455-videos{flex-direction:column;align-items:stretch;gap:10px}
+.v455-tiles{display:grid;grid-template-columns:1fr;gap:10px;width:100%}
+.v455-tiles.multi{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.v455-tile{display:flex;flex-direction:column;min-height:110px;overflow:hidden;border-radius:12px;background:#0b1314;border:1px solid rgba(147,207,159,.18)}
+.call-videos .v455-tile video{width:100%;max-height:34vh;border-radius:0;object-fit:contain;background:#0b1314}
+.call-videos .v455-tiles:not(.multi) .v455-tile video{max-height:45vh}
+.v455-tile-bar{display:flex;align-items:center;gap:8px;padding:6px 10px;font-size:12px;background:rgba(5,9,12,.85)}
+.v455-tile-name{flex:0 0 auto}
+.v455-tile-state{flex:1 1 auto;min-width:0;text-align:left;opacity:.75;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v455-tile-vol{flex:0 1 110px;min-width:70px}
+.v455-tile-vol[hidden],#v455-volume-row[hidden],#v455-invite-row[hidden]{display:none!important}
+.call-videos #my-video{align-self:center;width:min(30%,200px);max-height:22vh;object-fit:contain;background:#0b1314}
+.v455-invite{display:flex;flex-wrap:wrap;gap:9px;align-items:center;justify-content:center;margin-top:12px}
+.v455-invite select{min-width:170px}
+.v455-invite button{width:auto!important;min-height:38px!important}
+.v455-invite .hint{font-size:11px;max-width:340px;line-height:1.4}

@@ -1,0 +1,14 @@
+Quellcode/windows-app/dist/*.exe
+Quellcode/windows-app/dist/SHA256SUMS.txt
+Quellcode/windows-app/dist/.squadbase-update-check-*
+Quellcode/dist/
+Quellcode/installer/payload/
+__pycache__/
+node_modules/
+
+# Generated outputs and legacy duplicate autostart helpers
+SquadBase_Autostart_aktivieren.bat
+SquadBase_Autostart_aktivieren.ps1
+SquadBase_Autostart_deaktivieren.ps1
+Quellcode/windows-app/dist/
+

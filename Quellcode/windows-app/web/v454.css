@@ -1,0 +1,31 @@
+/* v4.5.4: Sound Tools, notifications and call media UI */
+.v454-subnav{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 15px}
+.v454-subnav button{min-width:150px;min-height:40px!important}
+#v454-sound-section[hidden],#v454-clicker-section[hidden],#v454-accept-video[hidden]{display:none!important}
+.v454-clicker-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0}
+.v454-clicker-grid>label,.v454-bind{display:flex;flex-direction:column;gap:8px;min-width:0;font-size:12px;color:#d9e7df}
+.v454-clicker-grid input,.v454-clicker-grid select{width:100%;min-height:43px;font-size:14px}
+.v454-clicker-grid small,.v454-bind small{font-size:11px;color:#a9bdb2;line-height:1.5}
+.v454-clicker-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.v454-clicker-buttons button{min-height:42px!important}
+.v454-clicker-state{margin:16px 0;padding:14px;border-radius:12px;border:1px solid #a5e8c940;background:#b5ecca12;font-weight:750;color:#b9f0cf}
+.v454-clicker-state[data-active="true"]{color:#ffdfae;background:#f5bf7a16;border-color:#f5bf7a5c}
+.v454-friend-settings{margin:14px 0 15px;border:1px solid #d2ffe52e;border-radius:17px;background:linear-gradient(120deg,#ffffff0e,#83d3a809);padding:16px}
+.v454-friend-settings summary{cursor:pointer;font-weight:750;color:#e6f1e7}
+.v454-notif-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:17px 0}
+.v454-notif-grid label{display:flex;gap:9px;align-items:center;flex-wrap:wrap;font-size:12px;color:#e4efe7;min-width:0}
+.v454-notif-grid input[type=range]{max-width:170px;width:100%}
+.v454-notif-actions{display:flex;gap:8px;flex-wrap:wrap}
+.v454-notif-actions button{width:auto!important;min-height:39px!important}
+.v454-meter{height:8px;border:1px solid #d7ffe147;border-radius:99px;overflow:hidden;background:#070f0f;margin:14px 0 7px}
+#v454-mic-meter{display:block;width:0%;height:100%;border-radius:99px;background:linear-gradient(90deg,#94dcb7,#d4eeaa);transition:width .09s}
+.v454-call-media{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:15px}
+.v454-call-media button{min-height:38px!important}
+.v454-call-media .hint{font-size:11px;max-width:340px;line-height:1.4}
+#call-overlay .call-videos{min-height:120px}
+#friend-video,#my-video{background:#0b1314;object-fit:contain}
+@media(max-width:650px){.v454-clicker-grid,.v454-notif-grid{grid-template-columns:1fr}.v454-subnav button{flex:1 1 135px}.v454-clicker-buttons button{flex:1 1 135px}}
+/* Keep tool actions compact rather than full-width at desktop sizes. */
+.v454-subnav button{width:auto!important;flex:0 1 175px}
+.v454-clicker-buttons button{width:auto!important;flex:0 1 auto;padding:11px 18px!important}
+@media(max-width:650px){.v454-subnav button{flex:1 1 135px}.v454-clicker-buttons button{flex:1 1 135px}}

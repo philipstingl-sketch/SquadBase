@@ -1,0 +1,39 @@
+
+/* SQUAD BASE v4.2.3 — Playlist library & full song selector */
+.spotify-library-browser{margin:21px 0 14px;padding:18px;border:1px solid rgba(var(--theme-rgb),.3);background:linear-gradient(145deg,rgba(var(--theme-rgb),.085),rgba(7,17,21,.65));border-radius:18px;min-width:0}
+.spotify-library-browser[hidden]{display:none!important}
+.spotify-library-heading{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.spotify-library-info{display:flex;align-items:center;gap:13px;min-width:0;flex:1}
+.spotify-library-info img{height:80px;width:80px;object-fit:cover;border:1px solid #ffffff26;border-radius:12px}
+.spotify-library-info h3{font-size:20px;margin:5px 0;overflow-wrap:anywhere}
+.spotify-library-info .eyebrow{font-size:10px;color:var(--green)}
+.spotify-library-actions,.spotify-library-load-actions{display:flex;gap:8px;flex-wrap:wrap}
+.spotify-library-actions button,.spotify-library-load-actions button{width:auto;font-size:12px}
+.spotify-library-toolbar{margin:18px 0 12px;display:flex;align-items:end;gap:15px;justify-content:space-between;flex-wrap:wrap}
+.spotify-library-search-label{min-width:250px;flex:1;max-width:580px;color:#d9e9df;font-size:12px;font-weight:650}
+.spotify-library-search-label input{display:block;margin-top:6px;width:100%;min-height:40px;border:1px solid #ffffff29;background:#07191dcc;border-radius:10px;color:#fff;padding:9px 13px;font:inherit}
+.spotify-library-search-label input:focus{outline:2px solid rgba(var(--theme-rgb),.48)}
+.spotify-track-head,.spotify-track-row{display:grid;grid-template-columns:38px minmax(180px,2fr) minmax(90px,1fr) 54px 120px;gap:10px;align-items:center;padding:9px 10px}
+.spotify-track-head{color:var(--muted);font-size:10px;letter-spacing:.7px;border-bottom:1px solid #ffffff22}
+.spotify-track-list{max-height:490px;overflow-y:auto;overscroll-behavior:contain}
+.spotify-track-row{border-bottom:1px solid #ffffff12;min-height:58px;border-radius:9px;font-size:12px;color:#d8eade}
+.spotify-track-row:hover,.spotify-track-row:focus-within{background:rgba(var(--theme-rgb),.095)}
+.spotify-track-row.spotify-unavailable{opacity:.56}
+.spotify-track-num{color:#88a89b;font-variant-numeric:tabular-nums}
+.spotify-track-main{min-width:0;display:flex;gap:10px;align-items:center}
+.spotify-track-main img{width:38px;height:38px;object-fit:cover;border-radius:6px;background:#24382d;flex-shrink:0}
+.spotify-track-main strong,.spotify-track-main small{display:block;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.spotify-track-main small{margin-top:4px;color:#a3b5aa}
+.spotify-track-album{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#9baea4}
+.spotify-track-play{border:1px solid rgba(var(--theme-rgb),.44);background:rgba(var(--theme-rgb),.13);border-radius:8px;color:var(--green);font-weight:750;padding:8px 6px;cursor:pointer;font-size:11px}
+.spotify-track-play:hover:not(:disabled){background:rgba(var(--theme-rgb),.3)}
+.spotify-track-play:disabled{opacity:.5;cursor:not-allowed}
+.spotify-track-play.spotify-pending{cursor:wait;opacity:.55}
+.spotify-library-footer{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:15px 0 8px}
+.spotify-library-disclaimer{border-top:1px solid #ffffff18;padding-top:12px;font-size:11px}
+.spotify-track-empty{color:var(--muted);text-align:center;padding:22px;font-size:12px}
+.spotify-playlist .playlist-buttons button.spotify-browse{background:rgba(var(--theme-rgb),.17);border-color:rgba(var(--theme-rgb),.5);color:#b9f3d2}
+@media(max-width:940px){.spotify-track-head,.spotify-track-row{grid-template-columns:28px minmax(150px,2fr) 48px 110px}.spotify-track-head span:nth-child(3),.spotify-track-album{display:none}}
+@media(max-width:520px){.spotify-track-head,.spotify-track-row{grid-template-columns:24px minmax(100px,1fr) 95px;gap:5px}.spotify-track-head span:nth-child(4),.spotify-track-row .spotify-track-duration{display:none}.spotify-track-main img{display:none}.spotify-library-browser{padding:10px}.spotify-library-info img{width:55px;height:55px}}
+
+.spotify-track-actions{display:flex;gap:6px;align-items:center;justify-content:flex-end}.spotify-track-external{border:1px solid #ffffff30;border-radius:8px;padding:7px 9px;text-decoration:none;color:#b6e6cf;font-size:13px}.spotify-track-external:hover{background:rgba(var(--theme-rgb),.18)}

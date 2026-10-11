@@ -1,0 +1,25 @@
+SQUAD BASE 4.7.0 – TESTBERICHT
+==============================
+
+Funktionsänderungen
+-------------------
+- KI-Assistent und Soundboard/Autoclicker werden beim App-Start in das einklappbare Menü „Tools“ sortiert.
+- Minispiele bleiben ein eigener direkter Hauptreiter.
+- Die Overlay-Konfiguration befindet sich innerhalb der Einstellungsseite in einem zusammenklappbaren Abschnitt.
+- Die IDs für KI-, Soundboard- und Overlay-Felder wurden beibehalten, damit bestehende UI-Logik erhalten bleibt.
+- Ein Go-Regressionstest prüft Nav-Zuordnung, Overlay-Einstellungsabschnitt und Version.
+
+Automatisierte Ergebnisse
+-------------------------
+- `go test ./...`: bestanden (App- und Relay-Pakete)
+- `go vet ./...`: bestanden
+- `node --check` für JavaScript-Dateien: bestanden
+- Playwright/Chromium-Smoke-Test bei 1440 × 960 und 900 × 960: bestanden; keine JavaScript-Laufzeitfehler
+- Cloud-Server-Tests: 13 bestanden, 0 fehlgeschlagen
+- HTML wurde geparst; keine doppelten IDs gefunden
+- Portable App und Installer: PE32+ Windows GUI, x86-64
+- SHA-256-Prüfsummen erzeugt
+
+Grenzen
+-------
+Die EXE-Dateien wurden unter Linux für Windows x64 kompiliert. Eine interaktive Ausführung auf einem echten Windows-Desktop war in dieser Umgebung nicht möglich. Daher sind Windows-Installer-Ablauf, Tray-Menü und Autostart noch auf dem Ziel-PC praktisch zu prüfen. Die Dateien sind nicht digital signiert.

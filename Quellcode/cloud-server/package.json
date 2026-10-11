@@ -1,0 +1,14 @@
+{
+  "name": "squadbase-friends-cloud",
+  "private": true,
+  "version": "4.5.5",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:local": "wrangler d1 migrations apply squadbase-friends-db --local",
+    "db:remote": "wrangler d1 migrations apply squadbase-friends-db --remote",
+    "test": "node --test test/*.test.mjs"
+  },
+  "devDependencies": {"wrangler": "^4.40.0"}
+}

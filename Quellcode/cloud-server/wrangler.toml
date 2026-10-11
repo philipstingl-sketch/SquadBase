@@ -1,0 +1,24 @@
+name = "squadbase-friends-cloud"
+main = "src/worker.mjs"
+compatibility_date = "2026-09-01"
+workers_dev = true
+
+[triggers]
+crons = ["0 3 * * *"] # daily at 03:00 UTC: expired sessions, signals, auth limits only.
+
+[vars]
+# Keep registrations private. Set an INVITE_CODE via `npx wrangler secret put INVITE_CODE`.
+# Optional TURN (siehe README_DE.md): Cloudflare = TURN_KEY_ID + TURN_KEY_API_TOKEN;
+# eigener coturn = TURN_URL + TURN_SECRET; statisch = TURN_URL + TURN_USER + TURN_PASSWORD. Alles als Secrets.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "squadbase-friends-db"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+# OPTIONAL: if R2 is enabled (a separate R2 subscription may be required),
+# create `squadbase-friends-files` and uncomment:
+# [[r2_buckets]]
+# binding = "FILES"
+# bucket_name = "squadbase-friends-files"

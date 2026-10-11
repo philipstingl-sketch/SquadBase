@@ -1,0 +1,2 @@
+012afbcd66c7ddd0c2a919c552b7257ecbd54d2416365c2e38ccf7af5509b150  SquadBase_v4.7.0_Friends_Tools.exe
+ecace3990850faa14ff332bbf42675813e99b068fd9183ec86d682a3bdec287e  SquadBase_v4.7.0_Installer.exe

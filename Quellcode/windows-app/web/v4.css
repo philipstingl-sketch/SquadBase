@@ -1,0 +1,60 @@
+/* SQUAD BASE 4.0 — Liquid Glass 2.0. Adjustable and GPU-conscious. */
+:root{--v4-glass-blur:18px;--v4-card-radius:18px;--v4-glass-tint:.55;--v4-glass-stroke:.18}
+.panel{border-radius:var(--v4-card-radius)!important;background:linear-gradient(148deg,rgba(31,43,45,var(--v4-glass-tint)),rgba(14,22,29,.84))!important;border:1px solid rgba(223,251,237,var(--v4-glass-stroke))!important;backdrop-filter:blur(var(--v4-glass-blur)) saturate(132%);-webkit-backdrop-filter:blur(var(--v4-glass-blur)) saturate(132%);box-shadow:0 15px 42px #0006,inset 0 1px rgba(255,255,255,.085);transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease}
+.panel:hover{border-color:rgba(var(--theme-rgb),.32)!important;box-shadow:0 18px 48px #0008,inset 0 1px rgba(255,255,255,.1)}
+body[data-cozy="extra"] .panel{background:linear-gradient(140deg,rgba(53,48,41,var(--v4-glass-tint)),rgba(17,25,28,.91))!important}
+.page-title h1,.intro h1{font-size:clamp(26px,2.8vw,39px);font-weight:735;letter-spacing:-1.1px}
+.page-title .eyebrow,.eyebrow{letter-spacing:1.6px}
+.section-head h2{font-size:16px;font-weight:740}
+.tab{transition:background .17s,color .17s,transform .17s}
+.tab.active{background:linear-gradient(98deg,rgba(var(--theme-rgb),.16),rgba(var(--theme-rgb),.045));border-color:rgba(var(--theme-rgb),.36)}
+.tab:hover{transform:translateX(2px)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+button:not(:disabled){transition:filter .15s,background .15s,transform .15s}
+button:not(:disabled):active{transform:scale(.985)}
+input,select{color-scheme:dark}
+body.v4-wallpaper-on .texture{background-image:linear-gradient(140deg,rgba(5,11,17,.36),rgba(5,10,15,.51)),var(--v4-wallpaper-url)!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;animation:none!important}
+body.v4-wallpaper-on #squad-background-fx{opacity:.43}
+/* Library */
+.v4-count{font-size:11px;display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;padding:0 8px;border-radius:11px;background:rgba(var(--theme-rgb),.14);color:var(--green);vertical-align:middle;margin-left:4px}
+.v4-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-start}
+.v4-actions .outline,.v4-actions .primary{width:auto;min-height:38px;padding:9px 13px;flex:0 0 auto}
+.v4-actions button{white-space:normal}
+.library-toolbar{display:flex;gap:11px;margin:5px 0 20px}
+.library-toolbar input,.library-toolbar select,.v4-maint input{background:#081319ae;border:1px solid rgba(var(--theme-rgb),.28);border-radius:12px;padding:12px 14px;color:var(--text);font:inherit;min-height:44px}
+.library-toolbar input{flex:1;min-width:120px}.library-toolbar select{min-width:145px}
+.library-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.v4-library-card{border:1px solid rgba(255,255,255,.10);border-radius:15px;background:linear-gradient(120deg,rgba(255,255,255,.065),rgba(255,255,255,.015));display:flex;align-items:center;gap:12px;padding:13px;min-width:0}
+.v4-library-card:hover{border-color:rgba(var(--theme-rgb),.38)}
+.v4-game-icon{display:grid;place-items:center;width:48px;height:48px;flex:0 0 48px;border-radius:14px;background:linear-gradient(140deg,rgba(var(--theme-rgb),.23),rgba(95,114,166,.10));color:var(--green);font-size:22px;font-weight:800}
+.v4-game-details{flex:1;min-width:0;display:grid;gap:4px}.v4-game-details strong{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.v4-game-details small{font-size:11px;color:var(--muted)}
+.v4-game-buttons{display:flex;gap:5px;align-items:center}.v4-game-buttons button{width:auto;flex:none;padding:8px 9px;font-size:11px}.v4-game-buttons .v4-fav{cursor:pointer;border:0;color:#ffd48a;background:transparent;font-size:23px;padding:3px 6px}
+/* Theme Studio */
+.v4-studio{margin:18px 0 20px}.v4-studio-layout{display:grid;grid-template-columns:minmax(220px,.87fr) minmax(300px,1fr);gap:25px;align-items:stretch}
+.v4-demo{min-height:250px;border-radius:18px;display:flex;flex-direction:column;justify-content:center;padding:23px;background:radial-gradient(circle at 75% 10%,rgba(var(--theme-rgb),.16),transparent 66%),linear-gradient(120deg,#0e1d25,#142b30);border:1px solid rgba(var(--theme-rgb),.19)}
+.v4-demo-card{display:flex;align-items:center;gap:14px;padding:17px 15px;border:1px solid rgba(255,255,255,.22);border-radius:var(--v4-card-radius);background:rgba(32,48,55,var(--v4-glass-tint));backdrop-filter:blur(var(--v4-glass-blur));box-shadow:0 18px 38px #0008,inset 0 1px #ffffff22}
+.v4-demo-card strong,.v4-demo-card small{display:block}.v4-demo-card strong{font-size:15px}.v4-demo-card small{font-size:11px;color:#b8c8c3}.v4-demo-icon{font-size:31px;color:var(--green)}.v4-demo-dot{margin-left:auto;font-size:10px;white-space:nowrap;color:var(--green);font-weight:800}
+.v4-studio-controls{display:grid;gap:14px}.v4-studio-controls label{display:grid;gap:7px;font-size:12px;font-weight:650}.v4-studio-controls output{float:right;color:var(--green);font-weight:800}.v4-studio-controls input[type=range]{accent-color:var(--green);width:100%}.v4-studio .v4-actions{margin:17px 0 0}
+/* App updates & diagnostics */
+.v4-maint-grid{align-items:start}.v4-maint{min-height:440px}.v4-maint label{display:block;margin:13px 0 7px;font-size:12px;font-weight:740}.v4-maint input{width:100%}.v4-maint .v4-actions{margin:14px 0}
+.v4-result{background:rgba(var(--theme-rgb),.055);border:1px solid rgba(var(--theme-rgb),.19);border-radius:11px;padding:12px 14px;margin-top:14px;font-size:12px;color:#c5e1d5;line-height:1.5;overflow-wrap:anywhere}.v4-result.v4-error{color:#ffafa6;border-color:#ff9a9a66}
+.v4-diagnostics{display:grid;grid-template-columns:1fr 1fr;gap:9px}.v4-diag-line{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid rgba(255,255,255,.09);background:#060e1387;border-radius:12px;min-width:0}.v4-diag-line span{color:#adc3ba;font-size:11px}.v4-diag-line strong{font-size:11px;text-align:right;color:var(--green);overflow-wrap:anywhere}
+.v4-history-toggle{display:flex;gap:9px;align-items:center;color:#bedccc;font-size:11px;margin-top:10px}.v4-history-toggle input{accent-color:var(--green)}
+/* Overlay 2.0 */
+.overlay-settings-panel{max-width:1450px}.overlay-preview-stage{background:radial-gradient(ellipse at 15% 20%,rgba(var(--theme-rgb),.15),transparent 70%),linear-gradient(145deg,#101720,#141b22)!important;border-radius:20px}
+.overlay-preview{border:1px solid rgba(255,255,255,.25)!important;border-radius:20px!important;background:linear-gradient(140deg,rgba(41,61,62,.79),rgba(13,24,33,.83))!important;backdrop-filter:blur(20px) saturate(150%);box-shadow:0 20px 43px #0008,inset 0 1px #fff2!important}
+.overlay-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}
+.overlay-options label{display:flex;align-items:center;gap:7px;border-radius:11px}
+.overlay-config-row{background:#ffffff06;border:1px solid #ffffff13;padding:17px;border-radius:14px}
+.overlay-preset-list button[aria-pressed="true"],.overlay-position-grid button[aria-pressed="true"]{border-color:var(--green)!important;color:var(--green)!important;background:rgba(var(--theme-rgb),.16)!important}
+/* Layout and reduced motion */
+@media(max-width:1100px){.v4-studio-layout{grid-template-columns:1fr}.v4-diagnostics{grid-template-columns:1fr}.v4-maint-grid{grid-template-columns:1fr}}
+@media(max-width:680px){.library-toolbar{flex-direction:column}.library-grid{grid-template-columns:1fr}.v4-actions button{flex:1 1 130px}.v4-studio-controls{gap:17px}.v4-game-buttons .primary{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.panel,.tab,button{transition:none!important}.page{animation:none!important}}
+
+.overlay-preview.v4-preview-compact{max-width:300px}.overlay-preview.v4-preview-compact .overlay-preview-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.overlay-preview.v4-preview-minimal .overlay-preview-top{display:none}
+
+.v4-autocheck{display:flex!important;align-items:center;gap:9px;line-height:1.4}.v4-autocheck input{width:auto!important;accent-color:var(--green)}
+.overlay-settings-panel>.section-head>.primary{width:auto;min-width:190px}
+.overlay-settings-panel .overlay-preview-stage{overflow:hidden}
+@media(max-width:650px){.overlay-settings-panel>.section-head{flex-direction:column}.overlay-settings-panel>.section-head>.primary{width:100%}}

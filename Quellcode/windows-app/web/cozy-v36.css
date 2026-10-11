@@ -1,0 +1,72 @@
+/* SQUAD BASE v3.6 — Cozy Studio / polished workspace */
+:root { --scene-brightness:1; --scene-dim:0; --scene-vignette:.2; }
+body { isolation:isolate; }
+.texture { filter:brightness(var(--scene-brightness)); transition:filter .25s ease; }
+body::after { content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+ background:radial-gradient(ellipse at 50% 44%,transparent 18%,rgba(0,0,0,var(--scene-vignette)) 100%),linear-gradient(rgba(0,0,0,var(--scene-dim)),rgba(0,0,0,var(--scene-dim)));
+}
+.app {position:relative;z-index:1;}
+body[data-scene="snow"] .texture {background:radial-gradient(ellipse at 60% 8%,#708fb433,transparent 55%),linear-gradient(135deg,#111d2b,#0b1622 60%,#162533);}
+body[data-scene="clouds"] .texture {background:radial-gradient(ellipse at 70% 15%,#6f899644,transparent 50%),radial-gradient(ellipse at 15% 70%,#35666e50,transparent 52%),linear-gradient(135deg,#101c25,#13252c 80%);}
+body[data-scene="dusk"] .texture {background:radial-gradient(ellipse at 78% 80%,#a56c4b55,transparent 53%),radial-gradient(ellipse at 20% 18%,#50406f55,transparent 58%),linear-gradient(135deg,#181924,#1e1d29 75%,#1a1b1e);}
+body[data-scene="dusk"][data-motion="on"] .texture {background-size:130% 130%;animation:dusk-glow 28s ease-in-out infinite alternate;}
+@keyframes dusk-glow {from{background-position:0% 50%}to{background-position:100% 36%}}
+.scene-snow {background:radial-gradient(circle at 12% 20%,#d1ecff 1px,transparent 3px),radial-gradient(circle at 70% 64%,#d1ecff 2px,transparent 4px),linear-gradient(#223a50,#0b1728);}
+.scene-clouds {background:radial-gradient(ellipse at 30% 35%,#a8c3c65e,transparent 53%),radial-gradient(ellipse at 80% 55%,#91adb45e,transparent 56%),linear-gradient(#1b3844,#15202b);}
+.scene-dusk {background:radial-gradient(ellipse at 74% 83%,#f5a16488,transparent 54%),linear-gradient(145deg,#252337,#363044,#1a1d25);}
+/* Make background customization visually grouped and easy to navigate. */
+.theme-settings-panel .section-head {align-items:center;}
+.theme-scene-grid {grid-template-columns:repeat(4,minmax(0,1fr));}
+.theme-scene {min-width:0;}
+.theme-scene small {display:block;line-height:1.4;}
+.background-studio {margin-top:20px;border-radius:16px;padding:19px 20px;background:linear-gradient(145deg,rgba(var(--theme-rgb),.055),rgba(3,14,20,.35));border:1px solid rgba(var(--theme-rgb),.19);}
+.background-studio-title {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;}
+.background-studio-title h3 {margin:0;font-size:15px;letter-spacing:.1px;}
+.background-studio-title>span {font-size:10px;letter-spacing:1px;color:var(--green);font-weight:750;}
+.background-controls {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 22px;}
+.background-controls label {display:grid;gap:8px;min-width:0;color:var(--text);font-size:12px;}
+.background-controls label>span {display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.background-controls output {font-variant-numeric:tabular-nums;color:var(--green);font-weight:700;}
+.background-controls input[type=range] {width:100%;accent-color:var(--green);cursor:pointer;}
+.background-controls select {width:100%;min-width:0;padding:10px 12px;color:var(--text);background:#0b1c20;border:1px solid rgba(var(--theme-rgb),.3);border-radius:10px;}
+.background-studio .hint {margin-bottom:0;line-height:1.5;}
+/* New minimal Cube Rush setup: game first, advanced options on demand. */
+.cube-title-row {align-items:center;}
+.cube-title-row .tag {flex-shrink:0;}
+.cube-launch-strip {display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:15px 16px;margin-top:2px;margin-bottom:12px;background:linear-gradient(110deg,rgba(var(--theme-rgb),.105),rgba(13,29,37,.65));border:1px solid rgba(var(--theme-rgb),.24);border-radius:15px;}
+.cube-launch-description {flex:1 1 235px;min-width:0;display:grid;gap:3px;}
+.cube-launch-description small {font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--green);}
+.cube-launch-description strong {font-size:15px;line-height:1.4;color:var(--text);overflow-wrap:anywhere;}
+.cube-launch-strip .outline {padding:10px 15px;font-size:12px;white-space:nowrap;}
+.cube-wallet-chip {padding:10px 13px;border-radius:10px;background:#070f15a8;border:1px solid var(--line);font-size:12px;color:#ffe6aa;white-space:nowrap;}
+.cube-settings-accordion {display:grid;gap:8px;margin-bottom:17px;}
+.cube-setting-group {background:rgba(5,16,22,.48);border-radius:12px;border:1px solid rgba(208,241,223,.115);overflow:hidden;}
+.cube-setting-group[open] {border-color:rgba(var(--theme-rgb),.4);background:rgba(8,24,29,.64);}
+.cube-setting-group summary {cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;justify-content:space-between;padding:12px 16px;font-size:13px;font-weight:750;}
+.cube-setting-group summary::-webkit-details-marker {display:none;}
+.cube-setting-group summary::after {content:'⌄';color:var(--green);font-size:18px;transition:transform .18s;}
+.cube-setting-group[open] summary::after {transform:rotate(180deg);}
+.cube-setting-group summary small {margin-left:auto;color:var(--muted);font-weight:500;font-size:11px;}
+.cube-setting-fields {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;padding:2px 16px 15px;}
+.cube-setting-fields label {min-width:0;display:grid;gap:6px;font-size:11px;font-weight:700;color:#bcd6cd;}
+.cube-setting-fields select {width:100%;max-width:none;min-height:42px;padding:9px 10px;border-radius:10px;background:#0b2025;color:var(--text);border:1px solid rgba(var(--theme-rgb),.25);font:inherit;}
+.cube-setting-fields .outline {align-self:end;min-height:42px;font-size:11px;}
+.cube-setting-fields .setting-disabled {opacity:.53;}
+.cube-shop-fields {grid-template-columns:minmax(180px,280px) minmax(160px,240px);}
+.cube-menu-note {font-size:11px;color:var(--muted);margin:0;padding:0 16px 15px;line-height:1.6;}
+.cube-panel .cube-revive-note {margin-top:12px;}
+.cube-panel .cube-hud {margin-top:14px;}
+.cube-panel .cube-extra-hud {margin-top:8px;}
+.cube-panel .cube-actions {align-items:center;flex-wrap:wrap;}
+.cube-panel .cube-actions .primary {min-height:46px;}
+/* Consistency pass across pages, avoiding an expensive blur on each hover. */
+.page-title {margin-bottom:25px;}
+.section-head h2,.panel>h2 {font-size:17px;letter-spacing:-.25px;}
+.panel {border-color:rgba(218,241,237,.12);}
+.panel:hover {border-color:rgba(var(--theme-rgb),.25);}
+.theme-settings-panel,.clock-settings-panel,.cozy-settings-panel {scroll-margin-top:20px;}
+button:disabled {opacity:.52;cursor:not-allowed;}
+@media(max-width:1200px){.cube-setting-fields{grid-template-columns:repeat(2,minmax(0,1fr));}.theme-scene-grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
+@media(max-width:700px){.background-controls{grid-template-columns:1fr;}.cube-setting-fields,.cube-shop-fields{grid-template-columns:1fr 1fr;}.cube-setting-group summary small{display:none;}.theme-scene-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.cube-wallet-chip{margin-left:0;}}
+@media(max-width:460px){.cube-setting-fields,.cube-shop-fields{grid-template-columns:1fr;}}
+@media(prefers-reduced-motion:reduce){body[data-scene="dusk"] .texture{animation:none!important}}
