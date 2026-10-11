@@ -130,6 +130,8 @@
   let unlocked=Math.max(1,Math.min(10,Number(store('squad-cube-unlocked-v3',1))||1));
   let stage=Math.max(1,Math.min(unlocked,Number(store('squad-cube-stage-v3',1))||1));
   let wallet=Math.max(0,Number(store('squad-cube-wallet-v3',0))||0);
+  const slotCost=10;
+  let slotSpinning=false;
   const skins={mint:{price:0,color:'#95f6ba',stroke:'#e8fff0'},ocean:{price:20,color:'#71cafe',stroke:'#d5f3ff'},violet:{price:50,color:'#bda6ff',stroke:'#f6ebff'},gold:{price:100,color:'#f9cc68',stroke:'#fff1c4'},ember:{price:140,color:'#ff9862',stroke:'#ffe4b9'},ice:{price:185,color:'#89e7ff',stroke:'#dffaff'},neon:{price:250,color:'#f08cff',stroke:'#ffe0ff'}};
   let unlockedSkins=store('squad-cube-skins-v3',['mint']);if(!Array.isArray(unlockedSkins))unlockedSkins=['mint'];
   let skin=store('squad-cube-skin-v3','mint');if(!unlockedSkins.includes(skin)||!skins[skin])skin='mint';
@@ -148,6 +150,8 @@
     el('cube-buy-skin').textContent=unlockedSkins.includes(choice)?'✓ Skin ausgerüstet':`Freischalten · ${price} 💎`;
     el('cube-stage').value=String(stage);
     [...el('cube-stage').options].forEach(opt=>{opt.disabled=Number(opt.value)>unlocked});
+    const spin=el('cube-slot-spin');
+    if(spin){spin.disabled=slotSpinning||wallet<slotCost;spin.textContent=slotSpinning?'🎰 Dreht …':wallet<slotCost?`Noch ${slotCost-wallet} 💎 nötig`:`🎰 Drehen · ${slotCost} 💎`}
   };
   updateShop();
   let distance = 0, speed = 0, spawnDistance = 0, points = 0, gems = 0, coins = [], obstacles = [], particles = [];
@@ -598,6 +602,26 @@
     wallet-=skins[choice].price;unlockedSkins.push(choice);skin=choice;
     persist('squad-cube-wallet-v3',wallet);persist('squad-cube-skins-v3',unlockedSkins);persist('squad-cube-skin-v3',skin);
     window.SquadSounds?.effect('success');updateShop();draw()
+  });
+  const slotSymbols=['💎','⭐','◆','🍀','7️⃣'];
+  el('cube-slot-spin').addEventListener('click',()=>{
+    if(slotSpinning||wallet<slotCost)return;
+    slotSpinning=true;
+    wallet-=slotCost;persist('squad-cube-wallet-v3',wallet);updateShop();
+    const reels=el('cube-slot-reels'),status=el('cube-slot-status');
+    status.textContent='Die Walzen drehen …';reels.classList.add('spinning');
+    const roll=Math.floor(Math.random()*100);
+    const jackpot=roll===0,win=roll>0&&roll<20;
+    const payout=jackpot?200:win?25:0;
+    const symbols=jackpot?['💎','💎','💎']:win?['⭐','⭐','💎']:[slotSymbols[Math.floor(Math.random()*slotSymbols.length)],slotSymbols[Math.floor(Math.random()*slotSymbols.length)],slotSymbols[Math.floor(Math.random()*slotSymbols.length)]];
+    if(!payout&&symbols[0]===symbols[1]&&symbols[1]===symbols[2])symbols[2]=slotSymbols[(slotSymbols.indexOf(symbols[2])+1)%slotSymbols.length];
+    setTimeout(()=>{
+      [...reels.children].forEach((reel,index)=>{reel.textContent=symbols[index]});
+      reels.classList.remove('spinning');slotSpinning=false;
+      if(payout){wallet+=payout;persist('squad-cube-wallet-v3',wallet);status.textContent=jackpot?'🎉 JACKPOT! +200 Kristalle!':'✨ Gewinn! +25 Kristalle.';window.SquadSounds?.effect('success')}
+      else{status.textContent='Kein Gewinn – der Einsatz von 10 Kristallen ist verloren.';window.SquadSounds?.effect('fail')}
+      updateShop();
+    },1250);
   });
   el('cube-quality').addEventListener('change',e=>{quality=e.target.value;localStorage.setItem('squad-cube-quality-v4',quality);draw()});
   el('cube-sound').addEventListener('click',()=>{
